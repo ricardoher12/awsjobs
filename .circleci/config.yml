@@ -40,7 +40,7 @@ jobs:
           aws-access-key-id: << parameters.aws-access-key-id >>
           aws-secret-access-key: << parameters.aws-secret-access-key >>
           aws-region: << parameters.aws-region >>
-          aws-session-token: << parameters.aws-session-token >>
+          #aws-session-token: << parameters.aws-session-token >>
       - aws-ecr/ecr-login:
           aws-region: <<parameters.aws-region>>
       - aws-ecr/build-image:
