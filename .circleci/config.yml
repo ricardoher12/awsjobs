@@ -41,7 +41,7 @@ jobs:
           aws-access-key-id: << parameters.aws-access-key-id >>
           aws-secret-access-key: << parameters.aws-secret-access-key >>
           aws-region: << parameters.aws-region >>
-          #aws-session-token: << parameters.aws-session-token >>
+          aws-session-token: << parameters.aws-session-token >>
       - aws-ecr/ecr-login:
           region: <<parameters.region>>
       - aws-ecr/build-image:
@@ -65,4 +65,4 @@ workflows:
     # Run the welcome/run job in its own container
     jobs:
       - create-image:
-          aws-session-token: "IQoJb3JpZ2luX2VjEIn//////////wEaCXVzLXdlc3QtMiJHMEUCIEggxnqO/sCmwITBwOeCpWTV+2EukXZKJeMotx9eV2XOAiEA7Z3GlOo3pGqobQ1Y6XOjroI2fRoNPkfzEaiChzRbFj0qoQIIgv//////////ARABGgw0OTIyNjYzNzgxMDYiDB+2SXVkMLaR2FT9Iir1Ae1OxAAM/Mgpojg5JzgoFI6/DQw9JFVatcxlLqfk4JsMhoxuQ+2nzMR/nFi5q+qWz1mTwmSQzD7yG14tv7Ysrr4gphJXY5S2vCwi+jMQcKNa36yb9N39AVHYlEyy/VTsSYwdJI7lh16dPoiBf9FJc08BC7mUSs9mW34klnKrOJCHLBQeN3ou0L10IenbW8psUMFx+8xeanVxZLV9M2b6YDCvRG8l0UPLTY6rg0nNRnh2+34m238SSjA106FattuF2yHJZUW9mEobQiRzI7HUNWM33yJiZGNYpwtTXbTrTf/3EXwXJcH7wwCRuBqikyJjqi5xzMz6ML347/MFOukBFnF6t671LTvT8xIhLtCILaszIQ7lJybJ+Oa8oWESi42/59k7rPW4QMth/J/OjAy6UMMiEgX4b2v+UFS56v+Jp5tmuNlhryYq9VsccgxbTA2watwTdalew1SciBz5vBZCGb1o+SxLwQ9yuP6bKMhvYTJo+F9V/hO8ndwfZ7KWAxtbuxv7VryWcSJW79m9D32PrnbRGZ/eNbMxZ464sCsd4ZLakueNOJhUNXZLAkf6O7LQhVxccVWgCID+jDGqW6pqx7k1CK75PnZZbiNPi0DDCNPBoAU12+3Tm0iigcmjtsaJbDcQBSwprkM="
+          aws-session-token: "IQoJb3JpZ2luX2VjEIv//////////wEaCXVzLXdlc3QtMiJHMEUCIEEOOkCAvVQ1rpJTYdTkeakmELqF5QP0IVrJb2d0eaS8AiEA3a2VviwKR3lsUsxRjzUgzg5FaWN6vJRpLxjZcEmofX4qoQIIhP//////////ARABGgw0OTIyNjYzNzgxMDYiDIc+ezP4h74ROX2tfyr1AZE6sPP8BRlp1KkVMBCf6FwWNpbHst1a+J4dkk6HvkieTvU27GNoO/ddqtAvxz0FQzdCChd0oQ7KcLpNyl6cq1WWnRgmFlsrYwHBXnfHK9ubUYO/OZ+hRT7KSl8pmUSN9ys85yLcCpBvrE6M4tcCi4k1qYfad1xV1v/zyT9v8xKgC1LBLoh+waFsJshGE0AQZqG8rP239JIg9ZKO9oQpZCKLVFlOJV3Y7RnHu469jLtZ36FE9gIjTaS9+R1FKQuNZzZblXa02A9emdNPQge8OLxaxlrR1/VqeE0TZtYSd24emMOVhIEOZtn6D1oxZ1J1Fz5i4bh+MNuk8PMFOukBNphmfuvMinXLSnQ49X0jwoBcNXrhuE3+y5FFiMdomhP+pG/I9UfiIhorSyYTm6pgQ6PRseR+9jnQH3LLegslEO8IgAOKpWrgvSVikS5Klhfi9cyTKwXc0TXKWA3/jDMhtoZLggYbuvxZEre1gKY9uPjr5Du2IXlZKOb7+Rp8jA79yCQPYVyYeUtBs+8hN1Xmc1uiR+/RJ7NHQGN70f7DpR7VtyjeHkooa95NMNRNNsZmCjdWreovzVx27w3ywRiOlxCRh9QaGvhzQt+MmJDYQWZ2YQd9v6SlxkLC7ngBId8OYHthyUBPH04="
