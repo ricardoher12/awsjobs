@@ -1,7 +1,8 @@
 version: 2
 jobs:
- build:
-   machine: true
+jobs:
+  build:
+    machine: true
    steps:
      - checkout
      # build the application image
@@ -17,3 +18,9 @@ jobs:
         command: docker tag myApp $AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}:{CIRCLE_SHA1}
     - run:
         command: docker push $AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}:{CIRCLE_SHA1}
+workflows:
+  # Name the workflow "welcome"
+  deploy-image:
+    # Run the welcome/run job in its own container
+    jobs:
+      - build-push
