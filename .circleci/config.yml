@@ -13,4 +13,7 @@ jobs:
       - run:
           name: build image
           command: "docker build -t myapp ."
+      - run:
+          name: ecr login
+          command: aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 492266378106.dkr.ecr.us-west-2.amazonaws.com/ricardo
 
