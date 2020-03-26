@@ -30,6 +30,7 @@ jobs:
           AWS region to operate in. Defaulted to $AWS_REGION
         type: string
         default: $AWS_REGION
+      region: {type: env_var_name, default: AWS_REGION}
 
     parallelism: 2
     steps:
