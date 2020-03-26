@@ -2,13 +2,14 @@ version: 2
 jobs:
   build:
     machine: true
-  steps:
-    - checkout
-    - run:
-      command: sudo apt-get install python-pip python-dev
-    - run:
-      name: Install awscli
-      command: sudo pip install awscli
+    steps:
+      - checkout
+      - run:
+          name: Install pip and python
+          command: sudo apt-get install python-pip python-dev
+      - run:
+          name: Install awscli
+          command: sudo pip install awscli
 workflows:
   # Name the workflow "welcome"
   deploy-image:
