@@ -15,7 +15,7 @@ jobs:
           command: "docker build -t myapp ."
       - run:
           name: ecr login
-          command: eval $(aws ecr get-login)
+          command: aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin $AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}
       - run:
           command: docker tag myapp $AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}:${CIRCLE_SHA1}
       - run:
