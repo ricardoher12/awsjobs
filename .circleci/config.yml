@@ -5,7 +5,8 @@ jobs:
   steps:
     - checkout
      # build the application image
-    - run: "docker build -t myApp"
+    - run: 
+        command: "docker build -t myApp"
     - run:
         command: sudo apt-get install python-pip python-dev
     - run:
