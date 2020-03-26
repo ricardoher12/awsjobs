@@ -44,7 +44,7 @@ jobs:
       #- aws-ecr/ecr-login:
           #region: <<parameters.region>>
       - aws-ecr/build-image:
-          dockerfile: "python/.dockerfile"
+          dockerfile: "dockerfile"
           repo: ${MY_APP_PREFIX}
           tag: ${CIRCLE_SHA1}
           extra-build-args: "-t $AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}:latest --build-arg GIT_BRANCH=${CIRCLE_BRANCH} --build-arg GIT_COMMIT=${CIRCLE_SHA1}"
