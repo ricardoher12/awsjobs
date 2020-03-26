@@ -41,9 +41,8 @@ jobs:
           aws-access-key-id: << parameters.aws-access-key-id >>
           aws-secret-access-key: << parameters.aws-secret-access-key >>
           aws-region: << parameters.aws-region >>
-          aws-session-token: << parameters.aws-session-token >>
-      - aws-ecr/ecr-login:
-          region: <<parameters.region>>
+      #- aws-ecr/ecr-login:
+          #region: <<parameters.region>>
       - aws-ecr/build-image:
           dockerfile: "python/.dockerfile"
           repo: ${MY_APP_PREFIX}
