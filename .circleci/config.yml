@@ -7,9 +7,6 @@ jobs:
   create-image:
     docker:
     - image: circleci/python:3.7.1
-    branches:
-        only:
-          - circleci-project-setup
     parameters:
       aws-access-key-id:
         description: |
