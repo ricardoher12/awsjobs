@@ -10,9 +10,4 @@ jobs:
       - run:
           name: Install awscli
           command: sudo pip install awscli
-workflows:
-  # Name the workflow "welcome"
-  deploy-image:
-    # Run the welcome/run job in its own container
-    jobs:
-      - build-push
+
