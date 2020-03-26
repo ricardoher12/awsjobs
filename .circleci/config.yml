@@ -1,67 +1,19 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
-version: 2.1
-# Use a package of configuration called an orb.
-orbs:
-  aws-ecs: circleci/aws-ecs@1.1.0
-  aws-cli: circleci/aws-cli@0.1.4
-  aws-ecr: circleci/aws-ecr@6.2.0
+version: 2
 jobs:
-  create-image:
-    docker:
-    - image: circleci/python:3.7.1
-    parameters:
-      aws-access-key-id:
-        description: |
-          AWS access key id for IAM role. Defaulted to $AWS_ACCESS_KEY_ID
-        type: string
-        default: $AWS_ACCESS_KEY_ID
-      aws-secret-access-key:
-        description: |
-          AWS secret key for IAM role. Defaulted to $AWS_SECRET_ACCESS_KEY
-        type: string
-        default: $AWS_SECRET_ACCESS_KEY
-      aws-session-token:
-        description: |
-          AWS session tocket. Defualted to $AWS_SESSION_TOKEN
-        type: string
-        default: $AWS_SESSION_TOKEN
-      aws-region:
-        description:
-          AWS region to operate in. Defaulted to $AWS_REGION
-        type: string
-        default: $AWS_REGION
-      region: {type: env_var_name, default: AWS_REGION}
-
-    parallelism: 2
-    steps:
-      - checkout
-      - setup_remote_docker
-      - aws-cli/install
-      - aws-cli/configure:
-          aws-access-key-id: << parameters.aws-access-key-id >>
-          aws-secret-access-key: << parameters.aws-secret-access-key >>
-          aws-region: << parameters.aws-region >>
-      #- aws-ecr/ecr-login:
-          #region: <<parameters.region>>
-      - aws-ecr/build-image:
-          dockerfile: "dockerfile"
-          repo: ${MY_APP_PREFIX}
-          tag: ${CIRCLE_SHA1}
-          extra-build-args: "-t $AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}:latest --build-arg GIT_BRANCH=${CIRCLE_BRANCH} --build-arg GIT_COMMIT=${CIRCLE_SHA1}"
-      # enviar la imagen con dos tags
-      - aws-ecr/push-image:
-          repo: "${MY_APP_PREFIX}"
-          tag: ${CIRCLE_SHA1}
-      - aws-ecr/push-image:
-          repo: "${MY_APP_PREFIX}"
-          tag: "latest"
-    
-
-# Orchestrate or schedule a set of jobs
-workflows:
-  # Name the workflow "welcome"
-  deploy-image:
-    # Run the welcome/run job in its own container
-    jobs:
-      - create-image:
-          aws-session-token: "IQoJb3JpZ2luX2VjEIv//////////wEaCXVzLXdlc3QtMiJHMEUCIEEOOkCAvVQ1rpJTYdTkeakmELqF5QP0IVrJb2d0eaS8AiEA3a2VviwKR3lsUsxRjzUgzg5FaWN6vJRpLxjZcEmofX4qoQIIhP//////////ARABGgw0OTIyNjYzNzgxMDYiDIc+ezP4h74ROX2tfyr1AZE6sPP8BRlp1KkVMBCf6FwWNpbHst1a+J4dkk6HvkieTvU27GNoO/ddqtAvxz0FQzdCChd0oQ7KcLpNyl6cq1WWnRgmFlsrYwHBXnfHK9ubUYO/OZ+hRT7KSl8pmUSN9ys85yLcCpBvrE6M4tcCi4k1qYfad1xV1v/zyT9v8xKgC1LBLoh+waFsJshGE0AQZqG8rP239JIg9ZKO9oQpZCKLVFlOJV3Y7RnHu469jLtZ36FE9gIjTaS9+R1FKQuNZzZblXa02A9emdNPQge8OLxaxlrR1/VqeE0TZtYSd24emMOVhIEOZtn6D1oxZ1J1Fz5i4bh+MNuk8PMFOukBNphmfuvMinXLSnQ49X0jwoBcNXrhuE3+y5FFiMdomhP+pG/I9UfiIhorSyYTm6pgQ6PRseR+9jnQH3LLegslEO8IgAOKpWrgvSVikS5Klhfi9cyTKwXc0TXKWA3/jDMhtoZLggYbuvxZEre1gKY9uPjr5Du2IXlZKOb7+Rp8jA79yCQPYVyYeUtBs+8hN1Xmc1uiR+/RJ7NHQGN70f7DpR7VtyjeHkooa95NMNRNNsZmCjdWreovzVx27w3ywRiOlxCRh9QaGvhzQt+MmJDYQWZ2YQd9v6SlxkLC7ngBId8OYHthyUBPH04="
+ build:
+   machine: true
+   steps:
+     - checkout
+     # build the application image
+     - run: "docker build -t myApp"
+     - run:
+        command: sudo apt-get install python-pip python-dev
+    - run:
+        name: Install awscli
+        command: sudo pip install awscli
+    - run:
+        command: aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 492266378106.dkr.ecr.us-west-2.amazonaws.com/ricardo
+    - run:
+        command: docker tag myApp $AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}:{CIRCLE_SHA1}
+    - run:
+        command: docker push $AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}:{CIRCLE_SHA1}
