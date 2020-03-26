@@ -40,7 +40,7 @@ jobs:
       - aws-cli/configure:
           aws-access-key-id: << parameters.aws-access-key-id >>
           aws-secret-access-key: << parameters.aws-secret-access-key >>
-          aws-region: << parameters.aws-region >>
+          aws-region: << parameters.region >>
           #aws-session-token: << parameters.aws-session-token >>
       - aws-ecr/ecr-login:
           region: <<parameters.aws-region>>
