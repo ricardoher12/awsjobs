@@ -4,20 +4,11 @@ jobs:
     machine: true
   steps:
     - checkout
-     # build the application image
-    - run: 
-        command: "docker build -t myApp"
     - run:
-        command: sudo apt-get install python-pip python-dev
+      command: sudo apt-get install python-pip python-dev
     - run:
-        name: Install awscli
-        command: sudo pip install awscli
-    - run:
-        command: aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 492266378106.dkr.ecr.us-west-2.amazonaws.com/ricardo
-    - run:
-        command: docker tag myApp $AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}:{CIRCLE_SHA1}
-    - run:
-        command: docker push $AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}:{CIRCLE_SHA1}
+      name: Install awscli
+      command: sudo pip install awscli
 workflows:
   # Name the workflow "welcome"
   deploy-image:
