@@ -61,7 +61,7 @@ workflows:
   deploy-image:
     # Run the welcome/run job in its own container
     jobs:
-      - aws-ecr/create-image:
+      - create-image:
           aws-access-key-id: "ASIAXFHK42N5OP44KS7J"
           aws-secret-access-key: "tww1OYqPgAba04HX7K10rw95zsnxil1H85vdKkxv"
           aws-session-token: "IQoJb3JpZ2luX2VjEIn//////////wEaCXVzLXdlc3QtMiJHMEUCIEggxnqO/sCmwITBwOeCpWTV+2EukXZKJeMotx9eV2XOAiEA7Z3GlOo3pGqobQ1Y6XOjroI2fRoNPkfzEaiChzRbFj0qoQIIgv//////////ARABGgw0OTIyNjYzNzgxMDYiDB+2SXVkMLaR2FT9Iir1Ae1OxAAM/Mgpojg5JzgoFI6/DQw9JFVatcxlLqfk4JsMhoxuQ+2nzMR/nFi5q+qWz1mTwmSQzD7yG14tv7Ysrr4gphJXY5S2vCwi+jMQcKNa36yb9N39AVHYlEyy/VTsSYwdJI7lh16dPoiBf9FJc08BC7mUSs9mW34klnKrOJCHLBQeN3ou0L10IenbW8psUMFx+8xeanVxZLV9M2b6YDCvRG8l0UPLTY6rg0nNRnh2+34m238SSjA106FattuF2yHJZUW9mEobQiRzI7HUNWM33yJiZGNYpwtTXbTrTf/3EXwXJcH7wwCRuBqikyJjqi5xzMz6ML347/MFOukBFnF6t671LTvT8xIhLtCILaszIQ7lJybJ+Oa8oWESi42/59k7rPW4QMth/J/OjAy6UMMiEgX4b2v+UFS56v+Jp5tmuNlhryYq9VsccgxbTA2watwTdalew1SciBz5vBZCGb1o+SxLwQ9yuP6bKMhvYTJo+F9V/hO8ndwfZ7KWAxtbuxv7VryWcSJW79m9D32PrnbRGZ/eNbMxZ464sCsd4ZLakueNOJhUNXZLAkf6O7LQhVxccVWgCID+jDGqW6pqx7k1CK75PnZZbiNPi0DDCNPBoAU12+3Tm0iigcmjtsaJbDcQBSwprkM="
