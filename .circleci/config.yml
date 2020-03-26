@@ -12,5 +12,5 @@ jobs:
             sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
       - run:
           name: build image
-          command: "docker build -t myApp"
+          command: "docker build -t myapp"
 
