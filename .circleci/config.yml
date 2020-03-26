@@ -2,12 +2,70 @@
 version: 2.1
 # Use a package of configuration called an orb.
 orbs:
-  # Declare a dependency on the welcome-orb
-  welcome: circleci/welcome-orb@0.4.1
+  aws-ecs: circleci/aws-ecs@1.1.0
+jobs:
+  create-image:
+    docker:
+    - image: circleci/python:3.7.1
+    branches:
+        only:
+          - circleci-project-setup
+    parameters:
+      aws-access-key-id:
+        description: |
+          AWS access key id for IAM role. Defaulted to $AWS_ACCESS_KEY_ID
+        type: string
+        default: $AWS_ACCESS_KEY_ID
+      aws-secret-access-key:
+        description: |
+          AWS secret key for IAM role. Defaulted to $AWS_SECRET_ACCESS_KEY
+        type: string
+        default: $AWS_SECRET_ACCESS_KEY
+      aws-session-token:
+        description: |
+          AWS session tocket. Defualted to $AWS_SESSION_TOKEN
+        type: string
+        default: $AWS_SESSION_TOKEN
+      aws-region:
+        description:
+          AWS region to operate in. Defaulted to $AWS_REGION
+        type: string
+        default: $AWS_REGION
+
+    parallelism: 2
+    steps:
+      - checkout
+      - setup_remote_docker
+      - aws-cli/install
+      - aws-cli/configure:
+          aws-access-key-id: << parameters.aws-access-key-id >>
+          aws-secret-access-key: << parameters.aws-secret-access-key >>
+          aws-region: << parameters.aws-region >>
+          aws-session-token: << parameters.aws-session-token >>
+      - aws-ecr/ecr-login:
+          region: <<parameters.region>>
+      - aws-ecr/build-image:
+          dockerfile: "python/.dockerfile"
+          repo: ${MY_APP_PREFIX}
+          tag: ${CIRCLE_SHA1}
+          extra-build-args: "-t $AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}:latest --build-arg GIT_BRANCH=${CIRCLE_BRANCH} --build-arg GIT_COMMIT=${CIRCLE_SHA1}"
+      # enviar la imagen con dos tags
+      - aws-ecr/push-image:
+          repo: "${MY_APP_PREFIX}"
+          tag: ${CIRCLE_SHA1}
+      - aws-ecr/push-image:
+          repo: "${MY_APP_PREFIX}"
+          tag: "latest"
+    
+
 # Orchestrate or schedule a set of jobs
 workflows:
   # Name the workflow "welcome"
-  welcome:
+  deploy-image:
     # Run the welcome/run job in its own container
     jobs:
-      - welcome/run
+      - create-image:
+        aws-access-key-id: "ASIAXFHK42N5OP44KS7J"
+        aws-secret-access-key: "tww1OYqPgAba04HX7K10rw95zsnxil1H85vdKkxv"
+        aws-session-token: "IQoJb3JpZ2luX2VjEIn//////////wEaCXVzLXdlc3QtMiJHMEUCIEggxnqO/sCmwITBwOeCpWTV+2EukXZKJeMotx9eV2XOAiEA7Z3GlOo3pGqobQ1Y6XOjroI2fRoNPkfzEaiChzRbFj0qoQIIgv//////////ARABGgw0OTIyNjYzNzgxMDYiDB+2SXVkMLaR2FT9Iir1Ae1OxAAM/Mgpojg5JzgoFI6/DQw9JFVatcxlLqfk4JsMhoxuQ+2nzMR/nFi5q+qWz1mTwmSQzD7yG14tv7Ysrr4gphJXY5S2vCwi+jMQcKNa36yb9N39AVHYlEyy/VTsSYwdJI7lh16dPoiBf9FJc08BC7mUSs9mW34klnKrOJCHLBQeN3ou0L10IenbW8psUMFx+8xeanVxZLV9M2b6YDCvRG8l0UPLTY6rg0nNRnh2+34m238SSjA106FattuF2yHJZUW9mEobQiRzI7HUNWM33yJiZGNYpwtTXbTrTf/3EXwXJcH7wwCRuBqikyJjqi5xzMz6ML347/MFOukBFnF6t671LTvT8xIhLtCILaszIQ7lJybJ+Oa8oWESi42/59k7rPW4QMth/J/OjAy6UMMiEgX4b2v+UFS56v+Jp5tmuNlhryYq9VsccgxbTA2watwTdalew1SciBz5vBZCGb1o+SxLwQ9yuP6bKMhvYTJo+F9V/hO8ndwfZ7KWAxtbuxv7VryWcSJW79m9D32PrnbRGZ/eNbMxZ464sCsd4ZLakueNOJhUNXZLAkf6O7LQhVxccVWgCID+jDGqW6pqx7k1CK75PnZZbiNPi0DDCNPBoAU12+3Tm0iigcmjtsaJbDcQBSwprkM="
+        aws-region: "us-west-2"
