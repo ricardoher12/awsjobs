@@ -4,10 +4,9 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run:
-          name: Install pip and python
-          command: sudo apt-get install python-pip python-dev
-      - run:
-          name: Install awscli
-          command: sudo pip install awscli
+      name: install aws
+          command: |
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
