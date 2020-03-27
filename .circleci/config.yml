@@ -47,7 +47,7 @@ jobs:
           name: update task definition
           command: |
             aws ecs register-task-definition \
-            --cli-input-json file://mytaskdefinition.json
+            --cli-input-json mytaskdefinition.json
 
 workflows:
   version: 2
