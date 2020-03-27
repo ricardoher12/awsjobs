@@ -34,7 +34,7 @@ jobs:
                   "hostPort": 80,
                   "protocol": "tcp"
                 }],
-                "essential": true,
+                "essential": true
               }],
               "requiresCompatibilities": [
                 "EC2"
