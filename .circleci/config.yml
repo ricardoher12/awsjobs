@@ -46,9 +46,8 @@ jobs:
       - run:
           name: update task definition
           command: |
-            aws ecs register-task-definition \
-            --cli-input-json file:///mytaskdefinition.json
-
+            aws ecs register-task-definition \
+            --cli-input-json file://mytaskdefinition.json
 workflows:
   version: 2
   deploy-image:
