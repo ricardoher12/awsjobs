@@ -49,7 +49,7 @@ jobs:
             aws ecs register-task-definition \
             --cli-input-json file://mytaskdefinition.json
 workflows:
-  version: 2
+  version: 2.1
   deploy-image:
     jobs:
       - build-push-image
