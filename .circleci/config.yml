@@ -25,7 +25,7 @@ jobs:
           command: |
             cat >> mytaskdefinition.json << EOF
             {
-              "family": "${MY_TD}",
+              "family": "${MY_ID}",
               "containerDefinitions": [{
                 "name": "rdhrService",
                 "image": "$AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}:${CIRCLE_SHA1}",
