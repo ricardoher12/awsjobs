@@ -52,6 +52,7 @@ jobs:
             --cli-input-json file://mytaskdefinition.json
 
 workflows:
+  version: 2
   deploy-image:
     jobs:
       - build-push-image
