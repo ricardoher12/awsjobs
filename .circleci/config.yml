@@ -23,8 +23,7 @@ jobs:
       -  run:
           name: crate new task definition
           command: |
-            vi mytaskdefinition.json
-            -----------------------
+            cat >> mytaskdefinition.json << EOF
             {
               "family": "${MY_TD}",
               "containerDefinitions": [{
@@ -43,8 +42,7 @@ jobs:
               "cpu": "256",
               "memory": "512"
             }
-            -----------------------
-            :wq
+            EOF
       - run:
           name: update task definition
           command: |
