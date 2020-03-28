@@ -4,8 +4,6 @@ jobs:
     machine: true
     parameters:
       service-name:
-        description: |
-          ECS service Name
         type: string
     steps:
       - checkout
@@ -64,5 +62,5 @@ workflows:
   deploy-image:
     jobs:
       - build-push-image:
-          service-name: "rdhrService"
+          service-name: rdhrService
 
