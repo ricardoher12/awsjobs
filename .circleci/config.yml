@@ -12,7 +12,7 @@ jobs:
       - run:
           name: install jq
           command: |
-          sudo apt install jq
+            sudo apt install jq
       - run: 
           name: install aws
           command: |
