@@ -55,7 +55,7 @@ jobs:
       - run:
           name: get task descriptions
           command: |
-            describe-task-definition --task-definition ${MY_ID}  \
+            aws ecs describe-task-definition --task-definition ${MY_ID}  \
             --generate-cli-skeleton input> task.json
      
         
