@@ -52,6 +52,11 @@ jobs:
           command: |
             aws ecs register-task-definition \
             --cli-input-json file://mytaskdefinition.json
+      - run:
+          name: get task descriptions
+          command: |
+            describe-task-definition --task-definition ${MY_ID}  \
+            --generate-cli-skeleton input> task.json
      
         
 workflows:
