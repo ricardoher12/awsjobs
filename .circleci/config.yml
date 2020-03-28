@@ -2,9 +2,6 @@ version: 2
 jobs:
   build-push-image:
     machine: true
-    parameters:
-      service-name:
-        type: string
     steps:
       - checkout
       - run:
@@ -34,7 +31,7 @@ jobs:
             {
               "family": "${MY_ID}",
               "containerDefinitions": [{
-                "name": "<< parameters.service-name >>",
+                "name": "${SERVICE_NAME}",
                 "image": "$AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}:${CIRCLE_SHA1}",
                 "portMappings": [{
                   "containerPort": 5000,
@@ -61,6 +58,5 @@ workflows:
   version: 2
   deploy-image:
     jobs:
-      - build-push-image:
-          service-name: rdhrService
+      - build-push-image
 
