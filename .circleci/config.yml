@@ -2,8 +2,17 @@ version: 2
 jobs:
   build-push-image:
     machine: true
+    parameters:
+      service-name:
+        description: |
+          ECS service Name
+        type: string
     steps:
       - checkout
+      - run:
+          name: install jq
+          command: |
+          sudo apt install jq
       - run: 
           name: install aws
           command: |
@@ -27,7 +36,7 @@ jobs:
             {
               "family": "${MY_ID}",
               "containerDefinitions": [{
-                "name": "rdhrService",
+                "name": "<< parameters.service-name >>",
                 "image": "$AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}:${CIRCLE_SHA1}",
                 "portMappings": [{
                   "containerPort": 5000,
@@ -48,9 +57,12 @@ jobs:
           command: |
             aws ecs register-task-definition \
             --cli-input-json file://mytaskdefinition.json
+     
+        
 workflows:
   version: 2
   deploy-image:
     jobs:
-      - build-push-image
+      - build-push-image:
+          service-name: "rdhrService"
 
