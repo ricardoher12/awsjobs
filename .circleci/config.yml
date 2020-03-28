@@ -62,5 +62,5 @@ workflows:
   deploy-image:
     jobs:
       - build-push-image:
-          service-name: rdhrService
+          file: rdhrService
 
