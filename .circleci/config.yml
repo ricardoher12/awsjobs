@@ -59,10 +59,10 @@ jobs:
       - run:
           name: variable assigment 
           command: |
-            TASK_REVISION=$(echo $DECRIBED_SERVICE | jq -r ".taskDefinition.revision")
+            TASK_REVISION=$(echo ${DECRIBED_SERVICE} | jq -r ".taskDefinition.revision")
       - run:
           name: variable verfication
-          command: echo $TASK_REVISION
+          command: echo ${TASK_REVISION}
       - run:
           name: update service
           command: aws ecs update-service --task-definition "${MY_ID}:${TASK_REVISION}" --cluster rdhrCluster --service ${SERVICE_NAME}
