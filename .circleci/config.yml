@@ -59,7 +59,7 @@ jobs:
       - run:
           name: variable assigment 
           command: |
-            echo echo $DECRIBED_SERVICE
+            echo  $DECRIBED_SERVICE
             TASK_REVISION=$(echo $DECRIBED_SERVICE | jq -r ".taskDefinition.revision")
       - run:
           name: variable verfication
