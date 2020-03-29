@@ -35,7 +35,7 @@ jobs:
                 "image": "$AWS_ECR_ACCOUNT_URL/${MY_APP_PREFIX}:${CIRCLE_SHA1}",
                 "portMappings": [{
                   "containerPort": 5000,
-                  "hostPort": 80,
+                  "hostPort": 0,
                   "protocol": "tcp"
                 }],
                 "essential": true
@@ -55,9 +55,12 @@ jobs:
       - run:
           name: get task descriptions
           command: |
-            aws ecs describe-task-definition --task-definition ${MY_ID}  \
-            --generate-cli-skeleton input> task.json
-     
+            aws ecs describe-task-definition --task-definition ${MY_ID}  > task.json
+      - run:
+          name: variable assigment 
+          command: |
+            TASK_REVISION=$(jq .taskDefinition.revision)  \   
+            echo $TASK_REVISION
         
 workflows:
   version: 2
