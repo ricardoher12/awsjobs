@@ -59,7 +59,7 @@ jobs:
       - run:
           name: variable assigment 
           command: |
-            echo jq -r ".taskDefinition.revision" task.json
+            TASK_REVISION=$(jq -r ".taskDefinition.revision" task.json)  
         
 workflows:
   version: 2
