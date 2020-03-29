@@ -55,11 +55,11 @@ jobs:
       - run:
           name: get task descriptions
           command: |
-            aws ecs describe-task-definition --task-definition ${MY_ID}  > task.json
+            DECRIBED_SERVICE=$(aws ecs describe-task-definition --task-definition ${MY_ID});
       - run:
           name: variable assigment 
           command: |
-            TASK_REVISION=$(jq -r ".taskDefinition.revision" task.json)  
+            TASK_REVISION=$(echo $DECRIBED_SERVICE | jq -r ".taskDefinition.revision")
       - run:
           name: variable verfication
           command: echo $TASK_REVISION
