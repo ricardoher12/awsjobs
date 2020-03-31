@@ -60,7 +60,7 @@ jobs:
             TASK_REVISION=$(echo ${DECRIBED_SERVICE} | jq -r ".taskDefinition.revision")
             echo $TASK_REVISION
             aws ecs update-service --task-definition "${MY_ID}:${TASK_REVISION}" --cluster rdhrCluster --service ${SERVICE_NAME}
-        
+            aws ecs wait services-stable --cluster rdhrCluster --services ${SERVICE_NAME}
 workflows:
   version: 2
   deploy-image:
